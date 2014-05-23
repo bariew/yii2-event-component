@@ -2,6 +2,7 @@
     "name": "bariew/yii2-event-component",
     "description": "Attaches events to all models",
     "type": "yii2-extension",
+    "version": "0.2",
     "keywords": ["yii2","extension","event"],
     "license": "BSD-4-Clause",
     "authors": [
