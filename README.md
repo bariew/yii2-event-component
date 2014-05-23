@@ -1,7 +1,7 @@
 
 Node tree Yii2 extension
 ===================
-Attaches events to all ActiveRecord and Controller instances
+Attaches events to all app models
 
 Installation
 ------------
@@ -25,6 +25,7 @@ to the require section of your `composer.json` file.
 
 Usage
 -----
+```
   1. Define app component in main config components section like in this example: 
   'components' => [
   ...
@@ -41,11 +42,4 @@ Usage
   ].
   2. mention it in config bootstrap section:
   'bootstrap' => ['events', 'log']
-  
-  You can also define $baseEvents variable to attach events not only for AR and Controllers:
-
-    "baseEvents" => [
-        '\yii\db\ActiveRecord'  => 'EVENT_INIT',
-        '\yii\base\Controller'  => 'EVENT_BEFORE_ACTION',
-        ... (Your settings)
-    ];
+```

@@ -1,6 +1,6 @@
 {
     "name": "bariew/yii2-event-component",
-    "description": "Attaches events to all ActiveRecord and Controller instances",
+    "description": "Attaches events to all models",
     "type": "yii2-extension",
     "keywords": ["yii2","extension","event"],
     "license": "BSD-4-Clause",
