@@ -1,0 +1,18 @@
+{
+    "name": "bariew/yii2-event-component",
+    "description": "Attaches events to all ActiveRecord and Controller instances",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","event"],
+    "license": "BSD-4-Clause",
+    "authors": [
+        {
+            "name": "Bariev Pavel",
+            "email": "bariew@yandex.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "bariew\\eventManager\\": ""
+        }
+    }
+}
