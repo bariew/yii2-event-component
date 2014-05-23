@@ -12,7 +12,7 @@ use yii\base\Event;
  * Attaches events to all app models
  * 
  * Usage: 
- * 1. define app component in main config components section: 
+ * define app component in main config components section: 
  * 'components' => [
  * ...
  *       'events'=> [
@@ -25,9 +25,7 @@ use yii\base\Event;
  *               ]
  *           ]
  *       ],
- * ].
- * 2. mention it in config bootstrap section:
- * 'bootstrap' => ['events', 'log']
+ * ]
  * 
  * @author Pavel Bariev <bariew@yandex.ru>
  */

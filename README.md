@@ -26,7 +26,7 @@ to the require section of your `composer.json` file.
 Usage
 -----
 ```
-  1. Define app component in main config components section like in this example: 
+  Define app component in main config components section like in this example: 
   'components' => [
   ...
         'events'=> [
@@ -39,7 +39,5 @@ Usage
                 ]
             ]
         ],
-  ].
-  2. mention it in config bootstrap section:
-  'bootstrap' => ['events', 'log']
+  ]
 ```
