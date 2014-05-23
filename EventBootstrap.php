@@ -22,8 +22,11 @@ class EventBootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($app) {
-            $this->getEventManager($app)->init();
+        if(!$eventManager = $this->getEventManager($app)){
+            return true;
+        }
+        $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($eventManager) {
+            $eventManager->init();
         });
         return true;
     }
@@ -42,6 +45,5 @@ class EventBootstrap implements BootstrapInterface
                 return $app->$name;
             }
         }
-        throw new Exception("Please define event manager component in your config file.");
     }
 }
