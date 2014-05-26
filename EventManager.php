@@ -4,10 +4,11 @@
  * @copyright (c) 2013, Galament
  * @license http://www.opensource.org/licenses/bsd-license.php
  */
+
 namespace bariew\eventManager;
-//namespace app\modules\main\components;
 use yii\base\Component;
 use yii\base\Event;
+
 /**
  * Attaches events to all app models
  * 
@@ -49,7 +50,15 @@ class EventManager extends Component
     public function init() 
     {
         parent::init();
-        foreach ($this->events as $className => $events) {
+        $this->attachEvents($this->events);
+    }
+    /**
+     * attaches all events to all classNames
+     * @param array $eventConfig commonly $this->events config
+     */
+    public function attachEvents($eventConfig)
+    {
+        foreach ($eventConfig as $className => $events) {
             foreach ($events as $eventName => $triggers) {
                 foreach ($triggers as $trigger) {
                     Event::on($className, $eventName, $trigger);

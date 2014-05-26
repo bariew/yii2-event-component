@@ -15,7 +15,7 @@ use yii\base\Application;
  * 
  * @author Pavel Bariev <bariew@yandex.ru>
  */
-class EventBootstrap implements BootstrapInterface
+class CmsBootstrap implements BootstrapInterface
 {
     /**
      * @inheritdoc
@@ -25,7 +25,6 @@ class EventBootstrap implements BootstrapInterface
         if(!$eventManager = $this->getEventManager($app)){
             return true;
         }
-        CmsBootstrap::attachModules($app);
         $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($eventManager) {
             $eventManager->init();
         });
@@ -37,13 +36,17 @@ class EventBootstrap implements BootstrapInterface
      * @return EventManager app event manager component
      * @throws Exception Define event manager
      */
-    private function getEventManager($app)
+    public static function attachModules($app)
     {
-        foreach ($app->components as $name => $config) {
-            $class = is_string($config) ? $config : @$config['class'];
-            if($class == str_replace('Bootstrap', 'Manager', get_class($this))){
-                return $app->$name;
+        $modules = $app->modules;
+        foreach ($app->extensions as $name => $config) {
+            $extName = preg_replace('/.*\/(.*)$/', '$1', $name);
+            if(!preg_match('/yii2-(.+)-cms-module/', $extName, $matches)){
+                continue;
             }
+            $alias = key($config['alias']);
+            $modules[$matches[1]] = str_replace(['@', '/'], ['\\', '\\'], $alias) .'\Module';
         }
+        \Yii::configure($app, compact('modules'));
     }
 }
