@@ -25,7 +25,6 @@ class EventBootstrap implements BootstrapInterface
         if(!$eventManager = $this->getEventManager($app)){
             return true;
         }
-        CmsBootstrap::attachModules($app);
         $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($eventManager) {
             $eventManager->init();
         });
