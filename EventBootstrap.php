@@ -22,7 +22,7 @@ class EventBootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if(!$eventManager = $this->getEventManager($app)){
+        if(!$eventManager = self::getEventManager($app)){
             return true;
         }
         $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($eventManager) {
@@ -36,11 +36,11 @@ class EventBootstrap implements BootstrapInterface
      * @return EventManager app event manager component
      * @throws Exception Define event manager
      */
-    private function getEventManager($app)
+    public static function getEventManager($app)
     {
         foreach ($app->components as $name => $config) {
             $class = is_string($config) ? $config : @$config['class'];
-            if($class == str_replace('Bootstrap', 'Manager', get_class($this))){
+            if($class == str_replace('Bootstrap', 'Manager', get_called_class())){
                 return $app->$name;
             }
         }
