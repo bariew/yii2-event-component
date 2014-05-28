@@ -18,6 +18,10 @@ use yii\base\Application;
 class EventBootstrap implements BootstrapInterface
 {
     /**
+     * @var EventManager EventManager memory storage for getEventManager method
+     */
+    protected static $_eventManager;
+    /**
      * @inheritdoc
      */
     public function bootstrap($app)
@@ -38,11 +42,24 @@ class EventBootstrap implements BootstrapInterface
      */
     public static function getEventManager($app)
     {
+        if (self::$_eventManager) {
+            return self::$_eventManager;
+        }
         foreach ($app->components as $name => $config) {
             $class = is_string($config) ? $config : @$config['class'];
             if($class == str_replace('Bootstrap', 'Manager', get_called_class())){
-                return $app->$name;
+                return self::$_eventManager = $app->$name;
             }
         }
+        $eventFile = \Yii::getAlias('@app/config/_events.php');
+        $app->setComponents([
+            'eventManager' => [
+                'class'  => 'bariew\eventManager\EventManager',
+                'events' => file_exists($eventFile) && is_file($eventFile)
+                    ? include $eventFile 
+                    : []
+            ],
+        ]);
+        return self::$_eventManager = $app->eventManager;
     }
 }

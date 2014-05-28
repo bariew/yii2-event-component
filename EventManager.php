@@ -10,23 +10,7 @@ use yii\base\Component;
 use yii\base\Event;
 
 /**
- * Attaches events to all app models
- * 
- * Usage: 
- * define app component in main config components section: 
- * 'components' => [
- * ...
- *       'events'=> [
- *           'class'     => 'bariew\eventManager\EventManager',
- *           'events'    => [
- *               'app\models\User' => [
- *                   'afterInsert' => [
- *                       ['app\models\Email', 'userRegistration']
- *                   ],  
- *               ]
- *           ]
- *       ],
- * ]
+ * Attaches events to all app models.
  * 
  * @author Pavel Bariev <bariew@yandex.ru>
  */
