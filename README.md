@@ -54,7 +54,9 @@ Usage
 
     Explanation: in the example we defined that after creating new User model ('afterInsert')
     Email::userRegistration($event) method will be called.
+```
 
+```
     Since 1.1.0 you may also not define event manager, but just put _events.php
     into your config folder returning the same 'events' array as in example:
 
@@ -63,7 +65,27 @@ Usage
         'app\models\User' => [
             'afterInsert' => [
                 ['app\models\Email', 'userRegistration']
-            ],  
+            ],
         ]
     ];
+```
+
+```
+    Since 1.2.0 you may also set nested events:
+
+    <?php
+    return [
+        'app\models\User' => [
+            'afterInsert' => [
+                ['app\models\Email', 'userRegistration', ['events' => [
+                    'emailError' => ['app\models\Admin', 'errorNotification']
+                ]]
+            ],
+        ]
+    ];
+
+    In the example above we believe that Email::userRegistration triggers 'emailError' event,
+    which will trigger app\models\Admin::errorNotification.
+    It is not workflow - all emailError events will trigger this method. It's only for clarity.
+
 ```

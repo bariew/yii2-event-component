@@ -45,9 +45,29 @@ class EventManager extends Component
         foreach ($eventConfig as $className => $events) {
             foreach ($events as $eventName => $triggers) {
                 foreach ($triggers as $trigger) {
+                    $this->attachNestedEvents($trigger);
                     Event::on($className, $eventName, $trigger);
                 }
             }
         }
+    }
+
+    /**
+     * Attaches nested events from common event settings trigger.
+     * Trigger should have structure ['className', 'methodName', 'events' => [...]
+     * $eventName => [
+          [$triggeredClassName, $triggeredMethodName]
+      ], ...
+     * @param array $trigger event settings
+     */
+    protected function attachNestedEvents(&$trigger)
+    {
+        if (!isset($trigger['events'])) {
+            return;
+        }
+        $this->attachEvents([
+            $trigger[0] => $trigger['events']
+        ]);
+        unset($trigger['events']);
     }
 }
