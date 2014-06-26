@@ -26,13 +26,7 @@ class EventBootstrap implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if(!$eventManager = self::getEventManager($app)){
-            return true;
-        }
-        $app->on(Application::EVENT_BEFORE_REQUEST, function () use ($eventManager) {
-            $eventManager->init();
-        });
-        return true;
+        self::getEventManager($app);
     }
     /**
      * finds and creates app event manager from its settings

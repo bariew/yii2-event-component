@@ -62,7 +62,7 @@ class EventManager extends Component
      */
     protected function attachNestedEvents(&$trigger)
     {
-        if (!isset($trigger['events'])) {
+        if (!is_array($trigger) || !isset($trigger['events'])) {
             return;
         }
         $this->attachEvents([
