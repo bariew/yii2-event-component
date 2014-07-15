@@ -45,7 +45,6 @@ class EventManager extends Component
         foreach ($eventConfig as $className => $events) {
             foreach ($events as $eventName => $handlers) {
                 foreach ($handlers as $handler) {
-                    $this->attachNestedEvents($handler);
                     Event::on($className, $eventName, $handler);
                 }
             }
