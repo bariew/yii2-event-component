@@ -17,11 +17,11 @@ use yii\base\Event;
 class EventManager extends Component
 {
     /**
-     * System widde models events settings - 
+     * System wide models events settings -
      * an array with structure: [
      *      $eventSenderClassName => [ 
      *          $eventName => [
-     *              [$triggeredClassName, $triggeredMethodName]
+     *              [$handlerClassName, $handlerMethodName]
      *          ]
      *      ]
      * ]
@@ -43,31 +43,12 @@ class EventManager extends Component
     public function attachEvents($eventConfig)
     {
         foreach ($eventConfig as $className => $events) {
-            foreach ($events as $eventName => $triggers) {
-                foreach ($triggers as $trigger) {
-                    $this->attachNestedEvents($trigger);
-                    Event::on($className, $eventName, $trigger);
+            foreach ($events as $eventName => $handlers) {
+                foreach ($handlers as $handler) {
+                    $this->attachNestedEvents($handler);
+                    Event::on($className, $eventName, $handler);
                 }
             }
         }
-    }
-
-    /**
-     * Attaches nested events from common event settings trigger.
-     * Trigger should have structure ['className', 'methodName', 'events' => [...]
-     * $eventName => [
-          [$triggeredClassName, $triggeredMethodName]
-      ], ...
-     * @param array $trigger event settings
-     */
-    protected function attachNestedEvents(&$trigger)
-    {
-        if (!is_array($trigger) || !isset($trigger['events'])) {
-            return;
-        }
-        $this->attachEvents([
-            $trigger[0] => $trigger['events']
-        ]);
-        unset($trigger['events']);
     }
 }
