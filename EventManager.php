@@ -25,6 +25,10 @@ class EventManager extends Component
      *          ]
      *      ]
      * ]
+     *
+     * @since 1.3.0 handler can also keep additional data and $append boolean as for Event::on() method eg:
+     *  ... [$handlerClassName, $handlerMethodName, ['myData'], false]
+     *
      * @var array events settings
      */
     public $events = [];
@@ -45,7 +49,9 @@ class EventManager extends Component
         foreach ($eventConfig as $className => $events) {
             foreach ($events as $eventName => $handlers) {
                 foreach ($handlers as $handler) {
-                    Event::on($className, $eventName, $handler);
+                    $append = isset($handler[3]) ? array_pop($handler) : null;
+                    $data = isset($handler[2]) ? array_pop($handler) : null;
+                    Event::on($className, $eventName, $handler, $data, $append);
                 }
             }
         }

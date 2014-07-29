@@ -71,21 +71,6 @@ Usage
 ```
 
 ```
-    Since 1.2.0 you may also set nested events:
-
-    <?php
-    return [
-        'app\models\User' => [
-            'afterInsert' => [
-                ['app\models\Email', 'userRegistration', ['events' => [
-                    'emailError' => ['app\models\Admin', 'errorNotification']
-                ]]
-            ],
-        ]
-    ];
-
-    In the example above we believe that Email::userRegistration triggers 'emailError' event,
-    which will trigger app\models\Admin::errorNotification.
-    It is not workflow - all emailError events will trigger this method. It's only for clarity.
-
+    since 1.3.0 handler can also keep additional data and $append boolean as for Event::on() method eg:
+    ... [$handlerClassName, $handlerMethodName, ['myData'], false]
 ```
