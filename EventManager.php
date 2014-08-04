@@ -52,12 +52,10 @@ class EventManager extends Component
                     if (is_array($handler) && is_callable($handler[0])) {
                         $data = isset($handler[1]) ? array_pop($handler) : null;
                         $append = isset($handler[2]) ? array_pop($handler) : null;
-                    } else {
-                        $data = null;
-                        $append = null;
+                        Event::on($className, $eventName, $handler[0], $data, $append);
+                    } else if (is_callable($handler)){
+                        Event::on($className, $eventName, $handler);
                     }
-
-                    Event::on($className, $eventName, $handler, $data, $append);
                 }
             }
         }
