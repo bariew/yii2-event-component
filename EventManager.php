@@ -11,7 +11,7 @@ use yii\base\Event;
 
 /**
  * Attaches events to all app models.
- * 
+ *
  * @author Pavel Bariev <bariew@yandex.ru>
  */
 class EventManager extends Component
@@ -19,7 +19,7 @@ class EventManager extends Component
     /**
      * System wide models events settings -
      * an array with structure: [
-     *      $eventSenderClassName => [ 
+     *      $eventSenderClassName => [
      *          $eventName => [
      *              [$handlerClassName, $handlerMethodName]
      *          ]
@@ -27,7 +27,7 @@ class EventManager extends Component
      * ]
      *
      * @since 1.3.0 handler can also keep additional data and $append boolean as for Event::on() method eg:
-     *  ... [$handlerClassName, $handlerMethodName, ['myData'], false]
+     *  ... [[$handlerClassName, $handlerMethodName], ['myData'], false]
      *
      * @var array events settings
      */
@@ -35,7 +35,7 @@ class EventManager extends Component
     /**
      * @inheritdoc
      */
-    public function init() 
+    public function init()
     {
         parent::init();
         $this->attachEvents($this->events);
@@ -49,8 +49,14 @@ class EventManager extends Component
         foreach ($eventConfig as $className => $events) {
             foreach ($events as $eventName => $handlers) {
                 foreach ($handlers as $handler) {
-                    $append = isset($handler[3]) ? array_pop($handler) : null;
-                    $data = isset($handler[2]) ? array_pop($handler) : null;
+                    if (is_array($handler) && is_callable($handler[0])) {
+                        $data = isset($handler[1]) ? array_pop($handler) : null;
+                        $append = isset($handler[2]) ? array_pop($handler) : null;
+                    } else {
+                        $data = null;
+                        $append = null;
+                    }
+
                     Event::on($className, $eventName, $handler, $data, $append);
                 }
             }
