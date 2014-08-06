@@ -32,6 +32,7 @@ class EventManager extends Component
      * @var array events settings
      */
     public $events = [];
+
     /**
      * @inheritdoc
      */
@@ -40,6 +41,7 @@ class EventManager extends Component
         parent::init();
         $this->attachEvents($this->events);
     }
+
     /**
      * attaches all events to all classNames
      * @param array $eventConfig commonly $this->events config
